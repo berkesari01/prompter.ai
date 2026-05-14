@@ -23,7 +23,7 @@ const aiModels = [
   { id: "gemini", label: "Gemini", color: "#8b5cf6", glow: "rgba(139,92,246,0.15)", border: "rgba(139,92,246,0.5)", url: "https://gemini.google.com", note: "Multimodal yetenekleri güçlüdür. Güncel bilgi ve araştırma odaklı görevlerde tercih edilir." },
 ];
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 
 const buildSystemPrompt = (aiId) => {
   const ai = aiModels.find(a => a.id === aiId);
@@ -351,7 +351,13 @@ export default function App() {
       });
       const data = await res.json();
       console.log("Groq yanıtı:", JSON.stringify(data));
-      setImprovedPrompt(data.choices[0].message.content);
+      const choice = data?.choices?.[0];
+      if (!choice?.message?.content) {
+        const errorMessage = data?.error?.message || "Beklenmeyen API yanıtı.";
+        setImprovedPrompt(`Hata: ${errorMessage}`);
+      } else {
+        setImprovedPrompt(choice.message.content);
+      }
     } catch (err) {
       setImprovedPrompt("Hata: " + err.message);
     }
