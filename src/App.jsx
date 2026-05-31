@@ -23,7 +23,7 @@ const aiModels = [
   { id: "gemini", label: "Gemini", color: "#8b5cf6", glow: "rgba(139,92,246,0.15)", border: "rgba(139,92,246,0.5)", url: "https://gemini.google.com", note: "Multimodal yetenekleri güçlüdür. Güncel bilgi ve araştırma odaklı görevlerde tercih edilir." },
 ];
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 const buildSystemPrompt = (aiId) => {
   const ai = aiModels.find(a => a.id === aiId);
